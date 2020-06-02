@@ -5,13 +5,18 @@ import {
   ElementRef,
   HostListener,
   HostBinding,
+  Input,
 } from "@angular/core";
 
 @Directive({
   selector: "[appBetterHighlight]",
 })
 export class BetterHighlightDirective implements OnInit {
-  @HostBinding("style.backgroundColor") backgroundColor: string = "transparent";
+  @Input() defaultColor: string = "transparent";
+  @Input() hightLightColor: string = "blue";
+
+  @HostBinding("style.backgroundColor")
+  backgroundColor: string;
 
   constructor(private elRef: ElementRef, private renderer: Renderer2) {}
   ngOnInit() {
@@ -20,6 +25,7 @@ export class BetterHighlightDirective implements OnInit {
     //   "background-color",
     //   "blue"
     // );
+    this.backgroundColor = this.defaultColor;
   }
 
   @HostListener("mouseenter") mouseOver(eventData: Event) {
@@ -28,7 +34,7 @@ export class BetterHighlightDirective implements OnInit {
     //   "background-color",
     //   "blue"
     // );
-    this.backgroundColor = "blue";
+    this.backgroundColor = this.hightLightColor;
   }
 
   @HostListener("mouseleave") mouseLeave(eventData: Event) {
@@ -37,6 +43,6 @@ export class BetterHighlightDirective implements OnInit {
     //   "background-color",
     //   "transparent"
     // );
-    this.backgroundColor = "transparent";
+    this.backgroundColor = this.defaultColor;
   }
 }
